@@ -1,4 +1,4 @@
-from flask import Flask, request
+from flask import Flask, jsonify, request
 from flask_cors import CORS
 from pymongo import MongoClient
 import pandas as pd
@@ -30,7 +30,7 @@ def upload_file():
     collection.insert_one(file_info)
     return 'File uploaded successfully!'
 
-@app.route('/load_csv/<file_name>', methods=['GET'])
+@app.route('/load_csv/<file_name>', methods=['POST'])
 def load_csv(file_name):
     # data_types = {
     #     "Date": str,  # Assuming 'Date' should be a string
@@ -42,6 +42,8 @@ def load_csv(file_name):
     #     "Change %": str  # Assuming 'Change %' should be a string
     # }
     # file_object = collection.find_one({'_id': file_id})
+    dataCol = request.get_json()
+    print(dataCol)
     file_object = collection.find_one({'file_name': file_name}, {'_id': 0})
     result = []
     if (file_object):
@@ -55,7 +57,9 @@ def load_csv(file_name):
 
         df = df.infer_objects()
         # Specified columns taken from the request
-        columns = ['Date', 'Price', 'Vol.']
+        # columns = ['Date', 'Price', 'Open']
+        columns = dataCol
+
         x = columns[0]
         y = columns[1:]
         print("x: ", x)
@@ -92,8 +96,10 @@ def load_csv(file_name):
             print(result)
         else:
             print("Columns have different data types.")
+            return "Y Columns have different data types"
 
-    return result
+
+    return jsonify(result)
 
 if __name__ == '__main__':
     app.run(debug=True)

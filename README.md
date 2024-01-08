@@ -1,11 +1,11 @@
 # Terminal Dev Project
 ## Stack Used: 
-Frontend: Next JS
-Styling: Tailwind CSS
-Backend: Flask, Python
-Chart Representation: ReCharts
-API handling: Axios
-Pre processing on backend: Pandas
+Frontend: Next JS\
+Styling: Tailwind CSS\
+Backend: Flask, Python\
+Chart Representation: ReCharts\
+API handling: Axios\
+Pre processing on backend: Pandas\
 
 ## How to Run the Application: 
 ### Description
